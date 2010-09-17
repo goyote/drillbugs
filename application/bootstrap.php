@@ -100,8 +100,8 @@ Kohana::$log->attach(new FirePHP_Log_Console());
  */
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
-		'controller' => 'welcome',
-		'action'     => 'index',
+		'controller' => 'browse',
+		'action'     => 'projects',
 	));
 
 /**
