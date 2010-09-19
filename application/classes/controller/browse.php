@@ -2,6 +2,8 @@
 
 class Controller_Browse extends Controller_Drillbugs {
 
+	public $secure_controller = 'login';
+
 	public function action_projects()
 	{
 
@@ -9,7 +11,7 @@ class Controller_Browse extends Controller_Drillbugs {
 
 	public function action_bug()
 	{
-			
+		
 	}
 
 } // End Controller_Browse
