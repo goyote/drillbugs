@@ -23,6 +23,11 @@ class Controller_Drillbugs extends Controller_Template {
 	public $secure_actions = FALSE;
 
 	/**
+	 * @var  string  current action
+	 */
+	public $action;
+
+	/**
 	 * Checks to see if user has view access.
 	 *
 	 * @return void
@@ -38,7 +43,7 @@ class Controller_Drillbugs extends Controller_Template {
 		$this->session = Session::instance();
 		
 		// Grab current action
-		$action = $this->request->action;
+		$this->action = $action = $this->request->action;
 
 		if (($this->secure_controller !== FALSE AND $this->auth->logged_in($this->secure_controller) === FALSE)
 			OR (is_array($this->secure_actions) AND array_key_exists($action, $this->secure_actions)

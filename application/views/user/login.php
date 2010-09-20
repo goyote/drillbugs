@@ -13,7 +13,7 @@
 
 		<p>
 			<?= form::label('username') ?>:
-			<?= form::input('username', Html::chars($post['username'])) ?>
+			<?= form::input('username', HTML::chars($post['username'])) ?>
 		</p>
 
 		<p>

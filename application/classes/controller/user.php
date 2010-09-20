@@ -2,15 +2,45 @@
 
 class Controller_User extends Controller_Drillbugs {
 
-	public function action_sign_in()
+	public function before()
 	{
-		if ($this->auth->logged_in())
+		parent::before();
+
+		if ($this->auth->logged_in() AND $this->action !== 'sign_out')
 		{
 			// If user already logged in, this page
 			// is pointless. Redirect user to app
 			$this->request->redirect('/');
 		}
+	}
 
+	public function action_sign_up()
+	{
+		// Set the page title
+		$this->template->title = 'Drillbugs: Sign up';
+
+		// Set the page
+		$this->template->content = View::factory('user/register')
+			->bind('errors', $errors)
+			->bind('post', $post);
+
+		if ($_POST)
+		{
+			// Attempt to register a new user; redirect if successful
+			ORM::factory('user')->register($_POST, '/');
+
+			// You've hit this line because there
+			// was a problem. Grab the error messages
+			$errors = $_POST->errors('user/register');
+
+			// Pass the submitted values back
+			// to the view for sticky forms
+			$post = $_POST->as_array();
+		}
+	}
+
+	public function action_sign_in()
+	{
 		// Set the page title
 		$this->template->title = 'Drillbugs: Sign in';
 
@@ -26,7 +56,7 @@ class Controller_User extends Controller_Drillbugs {
 
 			// You've hit this line because there
 			// was a problem. Grab the error messages
-			$errors = $_POST->errors('login');
+			$errors = $_POST->errors('user/login');
 
 			// Pass the submitted values back
 			// to the view for sticky forms
@@ -36,16 +66,8 @@ class Controller_User extends Controller_Drillbugs {
 
 	public function action_sign_out()
 	{
-		// Logout and destroy session
-		$this->auth->logout(TRUE);
-
-		// Redirect to sign in page
-		$this->request->redirect('/');
-	}
-
-	public function action_sign_up()
-	{
-
+		// Logout all users and destroy session
+		ORM::factory('user')->logout(TRUE, TRUE, '/');
 	}
 
 	public function action_forgot_password()

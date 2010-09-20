@@ -3,7 +3,6 @@
 	<head>
 		<meta charset="utf-8">
 		<title><?= $title ?></title>
-		<link rel="stylesheet" href="/assets/css/drillbugs.css">
 	</head>
 	<body>
 		<header>
